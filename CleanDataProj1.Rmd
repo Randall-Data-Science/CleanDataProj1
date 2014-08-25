@@ -185,10 +185,45 @@ allTheData[sample(10000, 10), 1:10]
 ```
 
 
+### And finally
 
-### The Inertial data are stored in separate files
+Creating the tidy data set. It is not clear which columns are requested so 
+I will summarize the summarized Inertial data columns using `dplyr`.
 
+```{r}
+if (!require(dplyr)) {install.packages("dplyr")}
 
+a1 <- group_by(allTheData, Activity, Subject)
+a2 <- select(a1, 3:581); rm(a1)
+tidyData <- summarise(a2, 
+                mean(3),
+                mean(4),
+                mean(5),
+                mean(6),
+                mean(7),
+                mean(8),
+                mean(9),
+                mean(9),
+                mean(10),
+                mean(11),
+                mean(12),
+                mean(13),
+                mean(14),
+                mean(15),
+                mean(16),
+                mean(17),
+                mean(18),
+                mean(19),
+                mean(20)
+); rm(a2)
+names(tidyData) <- names(allTheData)[1:20]
+```
+
+And then the data are saved:
+
+```{r}
+write.table(x = tidyData, file = "tidyData.txt", row.names = FALSE)
+```
 
 
 
